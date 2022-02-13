@@ -1,4 +1,5 @@
 [
   ./misc.nix
   #./sway
+  ./zsh
 ]

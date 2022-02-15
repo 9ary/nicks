@@ -1,0 +1,82 @@
+{
+    "nixos-21_11": {
+        "pinned": false,
+        "cargoLock": null,
+        "name": "nixos-21_11",
+        "version": "2128d0aa28edef51fd8fef38b132ffc0155595df",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "leaveDotGit": false,
+            "owner": "NixOS",
+            "fetchSubmodules": false,
+            "name": null,
+            "repo": "nixpkgs",
+            "type": "github",
+            "sha256": "sha256-hO9X4PvxkSLMQnGGB7tOrKPwufhLMiNQMNXNwzLqneo=",
+            "rev": "2128d0aa28edef51fd8fef38b132ffc0155595df"
+        },
+        "extract": null,
+        "rustGitDeps": null
+    },
+    "nixpkgs-lib": {
+        "pinned": false,
+        "cargoLock": null,
+        "name": "nixpkgs-lib",
+        "version": "e9d39d954b6fa4fc5bd56c9f5007cc37f3dcad76",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "leaveDotGit": false,
+            "owner": "nix-community",
+            "fetchSubmodules": false,
+            "name": null,
+            "repo": "nixpkgs.lib",
+            "type": "github",
+            "sha256": "sha256-bL1sdn3F+DjeIo2c4AKQmVsrk6KMNUfSVeER+72tRHk=",
+            "rev": "e9d39d954b6fa4fc5bd56c9f5007cc37f3dcad76"
+        },
+        "extract": null,
+        "rustGitDeps": null
+    },
+    "nvfetcher": {
+        "pinned": false,
+        "cargoLock": null,
+        "name": "nvfetcher",
+        "version": "9f2cb15c4668859312b6a854d79ad753d5b98b03",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "leaveDotGit": false,
+            "owner": "berberman",
+            "fetchSubmodules": false,
+            "name": null,
+            "repo": "nvfetcher",
+            "type": "github",
+            "sha256": "sha256-xEhhLmuy4FnT4Zdkf3epPX9T3xqn59yERCsicG4IEyM=",
+            "rev": "9f2cb15c4668859312b6a854d79ad753d5b98b03"
+        },
+        "extract": null,
+        "rustGitDeps": null
+    },
+    "nixos-unstable": {
+        "pinned": false,
+        "cargoLock": null,
+        "name": "nixos-unstable",
+        "version": "48d63e924a2666baf37f4f14a18f19347fbd54a2",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "leaveDotGit": false,
+            "owner": "NixOS",
+            "fetchSubmodules": false,
+            "name": null,
+            "repo": "nixpkgs",
+            "type": "github",
+            "sha256": "sha256-D3VuWLdnLmAXIkooWAtbTGSQI9Fc1lkvAr94wTxhnTU=",
+            "rev": "48d63e924a2666baf37f4f14a18f19347fbd54a2"
+        },
+        "extract": null,
+        "rustGitDeps": null
+    }
+}

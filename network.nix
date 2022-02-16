@@ -4,6 +4,8 @@
       ./hosts/Akatsuki/configuration.nix
     ];
 
-    deployment.targetHost = "Akatsuki.lan";
+    config = {
+      deployment.targetHost = "Akatsuki.lan";
+    };
   };
 }

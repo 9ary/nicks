@@ -1,14 +1,15 @@
 # Basic system configuration
-
 { ... }:
 
 {
-  nix.autoOptimiseStore = true;
+  config = {
+    nix.autoOptimiseStore = true;
 
-  services.openssh.enable = true;
+    services.openssh.enable = true;
 
-  services.journald.extraConfig = ''
-    SystemMaxUse=100M
-    MaxFileSec=7day
-  '';
+    services.journald.extraConfig = ''
+      SystemMaxUse=100M
+      MaxFileSec=7day
+    '';
+  };
 }

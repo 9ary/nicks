@@ -33,8 +33,8 @@
       ];
       data = [ ".db" ".sql" ".json" ".plist" ".xml" ];
       special = [
-        ".tex" ".rdf" ".owl" ".n3" ".ttl" ".nt" ".torrent" ".xml" "*Makefile" "*makefile"
-        "*Cargo.toml" "*Rakefile" "*build.xml" "*rc" ".nfo" "*README" "*README.txt" "*readme.txt"
+        ".rdf" ".owl" ".n3" ".ttl" ".nt" ".torrent" "*Makefile" "*makefile" "*Cargo.toml"
+        "*Rakefile" "*build.xml" "*rc" ".nfo" "*README" "*README.txt" "*readme.txt"
         "*README.markdown" "*README.md" "*shell.nix"
       ];
       low_importance = [

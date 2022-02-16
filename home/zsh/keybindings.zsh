@@ -28,8 +28,7 @@ unset -f terminfo-bindkey
 function grml-zsh-fg () {
     if (( ${#jobstates} )); then
         zle .push-input
-        [[ -o hist_ignore_space ]] && BUFFER=' ' || BUFFER=''
-        BUFFER="${BUFFER}fg"
+        BUFFER="fg"
         zle .accept-line
     fi
 }

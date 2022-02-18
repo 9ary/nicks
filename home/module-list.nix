@@ -1,5 +1,6 @@
 [
   ./misc.nix
-  #./sway
   ./zsh
+
+  ./workstation
 ]

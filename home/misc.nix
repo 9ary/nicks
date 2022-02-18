@@ -5,8 +5,8 @@
     home.packages = with pkgs; [
       git
       firefox
-      neovim
-      tdesktop
+      unstable.neovim
+      unstable.tdesktop
       wget
     ];
   };

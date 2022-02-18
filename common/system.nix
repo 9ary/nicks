@@ -3,6 +3,12 @@
 
 {
   config = {
+    nixpkgs.overlays = [
+      (_: _: {
+        unstable = import <unstable> {};
+      })
+    ];
+
     nix.autoOptimiseStore = true;
 
     services.openssh.enable = true;

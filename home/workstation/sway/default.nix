@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   config = {
@@ -17,9 +17,15 @@
         cfg = config.wayland.windowManager.sway.config;
         color_theme = import ../../colors.nix;
       in {
+        fonts = {
+          names = [ "Terminus" ];
+          size = 15.0;
+        };
+
         focus = {
           followMouse = "no";
           newWindow = "urgent";
+          forceWrapping = true;
         };
         seat."*".hide_cursor = "2000";
 
@@ -92,9 +98,72 @@
           urgent = colorSet color_theme.red color_theme.bg_1;
         };
 
-        # TODO change to Mod4
-        modifier = "Mod1";
+        output = {
+          "*" = {
+            # TODO background
+            subpixel = "none";
+          };
+          "Samsung Electric Company U32J59x HTPK700098" = {
+            # Longer vblank to minimize flickering during memory reclocks
+            modeline = "590.4 3840 3888 3920 4000 2160 2208 2216 2460 +HSync -VSync";
+          };
+        };
+
+        # TODO bars
+        # TODO menu
+        # TODO terminal
+
+        modifier = "Mod4";
+        bindkeysToCode = true;
+        keybindings = let
+          mapKeys = keys: names: mod: action: builtins.listToAttrs (
+            lib.zipListsWith (key: name: {
+              name = "${mod}+${key}";
+              value = "${action} ${name}";
+            }) keys names);
+
+          dirKeys = [ "h" "j" "k" "l" ];
+          dirNames = [ "left" "down" "up" "right" ];
+          mapDirs = mapKeys (dirKeys ++ dirNames) (dirNames ++ dirNames);
+
+          workspaceKeys = (builtins.genList (n: toString (n + 1)) 9) ++ [ "0" "n" "p" ];
+          workspaceNames = (builtins.genList (n: "number ${toString (n + 1)}") 10) ++ [ "next_on_output" "prev_on_output"];
+          mapWorkspaces = mapKeys workspaceKeys workspaceNames;
+        in lib.mkMerge [
+          (mapDirs "${cfg.modifier}" "focus")
+          (mapDirs "${cfg.modifier}+Shift" "move")
+          (mapWorkspaces "${cfg.modifier}" "workspace")
+          (mapWorkspaces "${cfg.modifier}+Shift" "move container to workspace")
+          (mapDirs "${cfg.modifier}+Ctrl" "move workspace to output")
+          {
+            "${cfg.modifier}+q" = "kill";
+
+            "${cfg.modifier}+space" = "focus mode_toggle";
+            "${cfg.modifier}+a" = "focus parent";
+            "${cfg.modifier}+d" = "focus child";
+
+            "${cfg.modifier}+semicolon" = "split h";
+            "${cfg.modifier}+v" = "split v";
+            "${cfg.modifier}+s" = "layout stacking";
+            "${cfg.modifier}+w" = "layout tabbed";
+            "${cfg.modifier}+e" = "layout toggle_split";
+
+            "${cfg.modifier}+f" = "fullscreen toggle";
+            "${cfg.modifier}+Shift+space" = "floating toggle";
+
+            "${cfg.modifier}+Escape" = "workspace back_and_forth";
+
+            "${cfg.modifier}+Shift+c" = "reload";
+            "${cfg.modifier}+Shift+q" = "exit";
+          }
+        ];
+        modes = {};
       };
+
+      extraConfig = ''
+        titlebar_padding 5 1
+        hide_edge_borders --i3 none
+      '';
     };
   };
 }

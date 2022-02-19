@@ -147,7 +147,7 @@
             "${cfg.modifier}+v" = "split v";
             "${cfg.modifier}+s" = "layout stacking";
             "${cfg.modifier}+w" = "layout tabbed";
-            "${cfg.modifier}+e" = "layout toggle_split";
+            "${cfg.modifier}+e" = "layout toggle split";
 
             "${cfg.modifier}+f" = "fullscreen toggle";
             "${cfg.modifier}+Shift+space" = "floating toggle";

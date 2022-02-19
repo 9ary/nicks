@@ -8,6 +8,9 @@
       unstable.neovim
       unstable.tdesktop
       wget
+
+      terminus_font
+      ubuntu_font_family
     ];
   };
 }

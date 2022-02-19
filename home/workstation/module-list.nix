@@ -1,3 +1,4 @@
 [
+  ./foot.nix
   ./sway
 ]

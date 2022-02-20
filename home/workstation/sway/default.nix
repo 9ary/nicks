@@ -4,14 +4,7 @@
   config = {
     wayland.windowManager.sway = {
       enable = true;
-      package = let
-        cfg = config.wayland.windowManager.sway;
-      in pkgs.unstable.sway.override {
-        extraSessionCommands = cfg.extraSessionCommands;
-        extraOptions = cfg.extraOptions;
-        withBaseWrapper = cfg.wrapperFeatures.base;
-        withGtkWrapper = cfg.wrapperFeatures.gtk;
-      };
+      package = null;
 
       config = let
         cfg = config.wayland.windowManager.sway.config;

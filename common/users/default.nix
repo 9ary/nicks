@@ -6,6 +6,9 @@
     home-manager = {
       useUserPackages = true;
       useGlobalPkgs = true;
+      extraSpecialArgs = {
+        systemProfile = config.systemProfile;
+      };
     };
 
     users.groups.novenary = {

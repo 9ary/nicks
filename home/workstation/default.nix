@@ -1,1 +1,5 @@
-{ ... }: { imports = import ./module-list.nix; }
+{ systemProfile, lib, ... }:
+
+{
+  imports = lib.optionals systemProfile.isWorkstation (import ./module-list.nix);
+}

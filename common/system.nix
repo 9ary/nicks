@@ -11,6 +11,10 @@
 
     nix.autoOptimiseStore = true;
 
+    environment.pathsToLink = [
+      "/share/zsh"
+    ];
+
     services.openssh.enable = true;
 
     services.journald.extraConfig = ''

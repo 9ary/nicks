@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../common
+    ./metalfan.nix
   ];
 
   config = {

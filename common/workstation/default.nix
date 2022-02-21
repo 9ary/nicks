@@ -5,11 +5,9 @@
     sound.enable = true;
     hardware.pulseaudio.enable = true;
 
-    nixpkgs.overlays = let
-      unstable = import <unstable> {};
-    in [
+    nixpkgs.overlays = [
       (_: _: {
-        sway = unstable.sway;
+        sway = pkgs.unstable.sway;
       })
     ];
     programs.sway = {

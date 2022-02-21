@@ -1,11 +1,13 @@
 # Basic system configuration
-{ ... }:
+{ config, ... }:
 
 {
   config = {
     nixpkgs.overlays = [
       (_: _: {
-        unstable = import <unstable> {};
+        unstable = import <unstable> {
+          config = config.nixpkgs.config;
+        };
       })
     ];
 

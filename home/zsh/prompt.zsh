@@ -34,6 +34,5 @@ function pr_pwd() {
 
 # We enable PROMPT_SUBST and use single quotes here so that the prompt gets expanded at runtime
 setopt PROMPT_SUBST
-# TODO add gitprompt-rs back
-PROMPT='${pr_bg}${pr_user}${pr_host}$(pr_pwd)%E
+PROMPT='${pr_bg}${pr_user}${pr_host}$(pr_pwd)$(${GITPROMPT_BIN} zsh)%E
 ${pr_reset}${pr_bold}$ ${pr_reset}'

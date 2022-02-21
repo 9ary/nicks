@@ -57,6 +57,9 @@
 
       # Prompt
       {
+        localVariables = {
+          GITPROMPT_BIN = "${pkgs.local.gitprompt-rs}/bin/gitprompt-rs";
+        };
         initExtra = builtins.readFile ./prompt.zsh;
       }
 

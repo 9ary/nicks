@@ -1,6 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports = [
+    ./wlsunset.nix
+  ];
+
   config = {
     wayland.windowManager.sway = {
       enable = true;

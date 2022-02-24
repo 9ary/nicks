@@ -5,7 +5,7 @@ let
 
   script = pkgs.writers.writePython3 "metalfan.py" {
     libraries = with pkgs.python3Packages; [ attrs ];
-  } (builtins.readFile ./metalfan.py);
+  } ./metalfan.py;
 
   configFile = pkgs.writeText "metalfan.json" (builtins.toJSON cfg.config);
 in {

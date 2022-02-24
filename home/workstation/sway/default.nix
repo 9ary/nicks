@@ -106,7 +106,36 @@
           };
         };
 
-        # TODO bars
+        bars = [
+          {
+            fonts = cfg.fonts;
+            position = "bottom";
+            extraConfig = ''
+              separator_symbol " | "
+              icon_theme ${config.gtk.iconTheme.name}
+            '';
+            statusCommand = toString (pkgs.writers.writePython3 "swaystatus" {
+              libraries = with pkgs.python3Packages; [ pkgs.local.python-pyalsaaudio psutil soco ];
+            } ./status/status.py);
+
+            colors = let
+              workspace = background: text: {
+                border = background;
+                background = background;
+                text = text;
+              };
+            in {
+              separator = color_theme.fg_0;
+              background = color_theme.bg_1;
+              statusline = color_theme.fg_0;
+              focusedWorkspace = workspace color_theme.blue color_theme.bg_1;
+              activeWorkspace = workspace color_theme.fg_0 color_theme.bg_0;
+              inactiveWorkspace = workspace color_theme.bg_2 color_theme.fg_0;
+              urgentWorkspace = workspace color_theme.red color_theme.bg_1;
+            };
+          }
+        ];
+
         # TODO menu
         # TODO terminal
 

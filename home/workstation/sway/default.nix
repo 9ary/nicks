@@ -97,7 +97,7 @@
 
         output = {
           "*" = {
-            # TODO background
+            background = "~/.swaybg fill";
             subpixel = "none";
           };
           "Samsung Electric Company U32J59x HTPK700098" = {

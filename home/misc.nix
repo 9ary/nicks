@@ -6,7 +6,6 @@
       git
       firefox
       unstable.neovim
-      unstable.tdesktop
       wget
       tree
       ripgrep

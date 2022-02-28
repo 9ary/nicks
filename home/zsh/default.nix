@@ -26,6 +26,7 @@
           extended = true;
           share = false;
           ignorePatterns = [
+            "fg"
             "fg *"
           ];
         };

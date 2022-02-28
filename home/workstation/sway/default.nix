@@ -156,12 +156,23 @@
           workspaceKeys = (builtins.genList (n: toString (n + 1)) 9) ++ [ "0" "n" "p" ];
           workspaceNames = (builtins.genList (n: "number ${toString (n + 1)}") 10) ++ [ "next_on_output" "prev_on_output"];
           mapWorkspaces = mapKeys workspaceKeys workspaceNames;
+
+          volumeKeys = [ "XF86AudioRaiseVolume" "XF86AudioLowerVolume" "XF86AudioMute" ];
+          volumeActions = map (a: "exec ${pkgs.pulseaudio}/bin/pactl ${a}") [
+            "set-sink-volume @DEFAULT_SINK@ +5%"
+            "set-sink-volume @DEFAULT_SINK@ -5%"
+            "set-sink-mute @DEFAULT_SINK@ toggle"
+          ];
+          sonosCommand = a: "exec ${pkgs.netcat}/bin/nc -NU /run/user/$UID/sonos_volume <<< ${a}";
+          sonosActions = map sonosCommand [ "+" "-" "x" "l" ];
         in lib.mkMerge [
           (mapDirs "${cfg.modifier}" "focus")
           (mapDirs "${cfg.modifier}+Shift" "move")
           (mapWorkspaces "${cfg.modifier}" "workspace")
           (mapWorkspaces "${cfg.modifier}+Shift" "move container to workspace")
           (mapDirs "${cfg.modifier}+Ctrl" "move workspace to output")
+          (mapKeys volumeKeys volumeActions "" "")
+          (mapKeys (volumeKeys ++ [ "XF86AudioPlay" ]) sonosActions "Shift" "")
           {
             "${cfg.modifier}+q" = "kill";
 

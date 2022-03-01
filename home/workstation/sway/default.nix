@@ -195,6 +195,9 @@
             "${cfg.modifier}+Shift+q" = "exit";
 
             "${cfg.modifier}+Return" = "exec $TERMINAL";
+
+            "XF86MonBrightnessUp" = "exec xbacklight -perceived -inc 5";
+            "XF86MonBrightnessDown" = "exec xbacklight -perceived -dec 5";
           }
         ];
         modes = {};

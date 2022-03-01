@@ -4,6 +4,8 @@
   imports = [
     ./hardware-configuration.nix
     ../../common
+
+    ./ddcci.nix
     ./metalfan.nix
   ];
 

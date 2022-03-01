@@ -21,5 +21,7 @@
       wrapperFeatures.gtk = true;
       extraPackages = with pkgs; [ swaylock swayidle ];
     };
+
+    hardware.acpilight.enable = true;
   };
 }

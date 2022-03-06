@@ -18,5 +18,10 @@
     };
 
     hardware.acpilight.enable = true;
+
+    hardware.bluetooth.enable = true;
+
+    nixpkgs.config.allowUnfree = true;
+    programs.steam.enable = true;
   };
 }

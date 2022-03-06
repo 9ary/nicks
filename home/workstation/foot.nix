@@ -5,7 +5,7 @@
     programs.foot = {
       enable = true;
       settings = let
-        color_theme = lib.mapAttrs (_: c: lib.removePrefix "#" c) (import ../colors.nix);
+        color_theme = config.commonSettings.colors.hex;
       in {
         main = {
           term = "xterm-256color";

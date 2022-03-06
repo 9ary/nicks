@@ -1,6 +1,7 @@
 [
   ./hosts
 
+  ./colors.nix
   ./misc.nix
   ./zsh
 

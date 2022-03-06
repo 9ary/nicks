@@ -12,7 +12,7 @@
 
       config = let
         cfg = config.wayland.windowManager.sway.config;
-        color_theme = import ../../colors.nix;
+        color_theme = config.commonSettings.colors.html;
       in {
         fonts = {
           names = [ "Terminus" ];

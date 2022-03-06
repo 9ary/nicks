@@ -136,8 +136,6 @@
           }
         ];
 
-        # TODO menu
-
         defaultWorkspace = "workspace number 1";
         modifier = "Mod4";
         bindkeysToCode = true;
@@ -164,6 +162,23 @@
           ];
           sonosCommand = a: "exec ${pkgs.netcat}/bin/nc -NU /run/user/$UID/sonos_volume <<< ${a}";
           sonosActions = map sonosCommand [ "+" "-" "x" "l" ];
+
+          appMenu = config.commonSettings.terminal {
+            command = pkgs.writeShellScript "fzf_run" ''
+              set -o errexit
+              command=$(
+                  IFS=:
+                  find $PATH -mindepth 1 -maxdepth 1 \
+                      2>/dev/null \
+                      -type f,l -executable \
+                      -printf "%f\0" \
+                      | sort -zu \
+                      | ${pkgs.fzf}/bin/fzf --read0
+              )
+              ${pkgs.util-linux}/bin/setsid -f ''${SHELL:-"/bin/sh"} -c "''${command}"
+            '';
+            modal = true;
+          };
         in lib.mkMerge [
           (mapDirs "${cfg.modifier}" "focus")
           (mapDirs "${cfg.modifier}+Shift" "move")
@@ -193,6 +208,7 @@
             "${cfg.modifier}+Shift+c" = "reload";
             "${cfg.modifier}+Shift+q" = "exit";
 
+            "${cfg.modifier}+r" = "exec ${appMenu}";
             "${cfg.modifier}+Return" = "exec ${config.commonSettings.terminal {}}";
 
             "XF86MonBrightnessUp" = "exec xbacklight -perceived -inc 5";

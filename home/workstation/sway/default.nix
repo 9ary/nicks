@@ -102,7 +102,7 @@
           };
           "Samsung Electric Company U32J59x HTPK700098" = {
             # Longer vblank to minimize flickering during memory reclocks
-            modeline = "590.4 3840 3888 3920 4000 2160 2208 2216 2460 +HSync -VSync";
+            #modeline = "590.4 3840 3888 3920 4000 2160 2208 2216 2460 +HSync -VSync";
           };
         };
 

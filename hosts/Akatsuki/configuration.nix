@@ -6,6 +6,7 @@
     ../../common
 
     ./ddcci.nix
+    ./jellyfin.nix
     ./metalfan.nix
   ];
 

@@ -59,5 +59,16 @@
         };
       };
     };
+
+    commonSettings.terminal = {
+      command ? "",
+      modal ? false,
+      size ? null
+    }: lib.concatStringsSep " " [
+      "foot"
+      (lib.optionalString modal "-a modalterm")
+      (lib.optionalString (size != null) "-W ${toString size.w}x${toString size.h}")
+      command
+    ];
   };
 }

@@ -137,7 +137,6 @@
         ];
 
         # TODO menu
-        # TODO terminal
 
         defaultWorkspace = "workspace number 1";
         modifier = "Mod4";
@@ -194,7 +193,7 @@
             "${cfg.modifier}+Shift+c" = "reload";
             "${cfg.modifier}+Shift+q" = "exit";
 
-            "${cfg.modifier}+Return" = "exec $TERMINAL";
+            "${cfg.modifier}+Return" = "exec ${config.commonSettings.terminal {}}";
 
             "XF86MonBrightnessUp" = "exec xbacklight -perceived -inc 5";
             "XF86MonBrightnessDown" = "exec xbacklight -perceived -dec 5";

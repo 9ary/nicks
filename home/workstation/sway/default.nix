@@ -12,7 +12,7 @@
 
       config = let
         cfg = config.wayland.windowManager.sway.config;
-        color_theme = config.commonSettings.colors.html;
+        color_theme = config.miscAttrs.colors.html;
       in {
         fonts = {
           names = [ "Terminus" ];
@@ -163,7 +163,7 @@
           sonosCommand = a: "exec ${pkgs.netcat}/bin/nc -NU /run/user/$UID/sonos_volume <<< ${a}";
           sonosActions = map sonosCommand [ "+" "-" "x" "l" ];
 
-          appMenu = config.commonSettings.terminal {
+          appMenu = config.miscAttrs.terminal {
             command = pkgs.writeShellScript "fzf_run" ''
               set -o errexit
               command=$(
@@ -209,7 +209,7 @@
             "${cfg.modifier}+Shift+q" = "exit";
 
             "${cfg.modifier}+r" = "exec ${appMenu}";
-            "${cfg.modifier}+Return" = "exec ${config.commonSettings.terminal {}}";
+            "${cfg.modifier}+Return" = "exec ${config.miscAttrs.terminal {}}";
 
             "XF86MonBrightnessUp" = "exec xbacklight -perceived -inc 5";
             "XF86MonBrightnessDown" = "exec xbacklight -perceived -dec 5";

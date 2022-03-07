@@ -5,7 +5,7 @@
     programs.foot = {
       enable = true;
       settings = let
-        color_theme = config.commonSettings.colors.hex;
+        color_theme = config.miscAttrs.colors.hex;
       in {
         main = {
           term = "xterm-256color";
@@ -60,7 +60,7 @@
       };
     };
 
-    commonSettings.terminal = {
+    miscAttrs.terminal = {
       command ? "",
       modal ? false,
       size ? null

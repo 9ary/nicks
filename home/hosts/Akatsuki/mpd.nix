@@ -77,7 +77,7 @@
       "XF86AudioPlay" = "exec ${pkgs.mpc_cli}/bin/mpc toggle";
       "XF86AudioNext" = "exec ${pkgs.mpc_cli}/bin/mpc next";
       "XF86AudioPrev" = "exec ${pkgs.mpc_cli}/bin/mpc cdprev";
-      "XF86Tools" = "exec " + config.commonSettings.terminal {
+      "XF86Tools" = "exec " + config.miscAttrs.terminal {
         command = "ncmpcpp";
         modal = true;
         size = { w = 120; h = 60; };

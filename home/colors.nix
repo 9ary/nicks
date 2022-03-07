@@ -2,8 +2,8 @@
 
 {
   config = {
-    commonSettings.colors = let
-      cfg = config.commonSettings.colors;
+    miscAttrs.colors = let
+      cfg = config.miscAttrs.colors;
     in {
       html = {
         bg_0 = "#ffffff";

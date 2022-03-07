@@ -7,7 +7,7 @@ pkgs.mkShell {
     pkgs.git
     pkgs.morph
     pkgs.nix-prefetch
-    pkgs.nvfetcher
+    pkgs.nvchecker
   ];
   NIX_PATH = "nixpkgs=${toString pkgs.path}";
   NIX_SSL_CERT_FILE = "${pkgs.cacert.out}/etc/ssl/certs/ca-bundle.crt";

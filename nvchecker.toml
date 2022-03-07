@@ -1,0 +1,21 @@
+[__config__]
+oldver = "_sources/generated-oldver.json"
+newver = "_sources/generated-newver.json"
+
+[nixos-21_11]
+source = "github"
+github = "NixOS/nixpkgs"
+branch = "nixos-21.11"
+
+[nixos-unstable]
+source = "github"
+github = "NixOS/nixpkgs"
+branch = "nixos-unstable"
+
+[nixpkgs-lib]
+source = "github"
+github = "nix-community/nixpkgs.lib"
+
+[nvfetcher]
+source = "github"
+github = "berberman/nvfetcher"

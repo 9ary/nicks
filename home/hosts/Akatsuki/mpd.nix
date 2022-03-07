@@ -73,8 +73,15 @@
         shuffle
     '';
 
+    services.mpdris2 = {
+      enable = true;
+    };
+
     services.spotifyd = {
       enable = true;
+      package = pkgs.spotifyd.override {
+        withMpris = true;
+      };
       settings = {
         global = {
           backend = "pulseaudio";
@@ -84,14 +91,19 @@
           cache_path = "${config.xdg.dataHome}/spotifyd";
           no_audio_cache = true;
           zeroconf_port = 4444;
+          use_mpris = true;
         };
       };
     };
 
+    services.playerctld = {
+      enable = true;
+    };
+
     wayland.windowManager.sway.config.keybindings = {
-      "XF86AudioPlay" = "exec ${pkgs.mpc_cli}/bin/mpc toggle";
-      "XF86AudioNext" = "exec ${pkgs.mpc_cli}/bin/mpc next";
-      "XF86AudioPrev" = "exec ${pkgs.mpc_cli}/bin/mpc cdprev";
+      "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+      "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
+      "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
       "XF86Tools" = "exec " + config.miscAttrs.terminal {
         command = "ncmpcpp";
         modal = true;

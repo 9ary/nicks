@@ -73,6 +73,21 @@
         shuffle
     '';
 
+    services.spotifyd = {
+      enable = true;
+      settings = {
+        global = {
+          backend = "pulseaudio";
+          bitrate = 320;
+          volume_normalisation = true;
+          normalisation_pregain = 0;
+          cache_path = "${config.xdg.dataHome}/spotifyd";
+          no_audio_cache = true;
+          zeroconf_port = 4444;
+        };
+      };
+    };
+
     wayland.windowManager.sway.config.keybindings = {
       "XF86AudioPlay" = "exec ${pkgs.mpc_cli}/bin/mpc toggle";
       "XF86AudioNext" = "exec ${pkgs.mpc_cli}/bin/mpc next";

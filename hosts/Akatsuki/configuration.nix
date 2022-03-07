@@ -36,9 +36,20 @@
       isWorkstation = true;
     };
 
-    # Sonos/SoCo
-    # TODO move Sonos volume control to a system module
-    networking.firewall.allowedTCPPorts = [ 1400 ];
+    networking.firewall = {
+      allowedTCPPorts = [
+        # Sonos/SoCo
+        # TODO move Sonos volume control to a system module?
+        1400
+
+        # spotifyd
+        4444
+      ];
+      allowedUDPPorts = [
+        # mDNS/spotifyd
+        5353
+      ];
+    };
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

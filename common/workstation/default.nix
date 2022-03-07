@@ -17,6 +17,15 @@
       extraPackages = with pkgs; [ swaylock swayidle ];
     };
 
+    xdg.portal.wlr = {
+      enable = true;
+      settings = {
+        screencast = {
+          chooser_type = "none";
+        };
+      };
+    };
+
     hardware.acpilight.enable = true;
 
     hardware.bluetooth.enable = true;

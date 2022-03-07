@@ -79,7 +79,7 @@
 
     services.spotifyd = {
       enable = true;
-      package = pkgs.spotifyd.override {
+      package = pkgs.unstable.spotifyd.override {
         withMpris = true;
       };
       settings = {

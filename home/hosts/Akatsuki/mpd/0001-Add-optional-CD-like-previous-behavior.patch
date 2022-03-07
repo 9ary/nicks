@@ -1,0 +1,73 @@
+From 503bc8f85a44d7fd3d340f95c6ba51ecb0353bae Mon Sep 17 00:00:00 2001
+From: novenary <streetwalkermc@gmail.com>
+Date: Mon, 7 Mar 2022 17:35:26 +0200
+Subject: [PATCH] Add optional CD-like previous behavior
+
+This adds a "cdprev" config option which makes the previous command
+behave more like most other music players: if playback is more than
+three seconds into a track, seek to the beginning, otherwise go to the
+previous track.
+
+This option is named after a similar feature in mpc.
+---
+ README.md         | 1 +
+ src/mpDris2.conf  | 2 ++
+ src/mpDris2.in.py | 9 ++++++++-
+ 3 files changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/README.md b/README.md
+index 19f3e2d..13bb45d 100644
+--- a/README.md
++++ b/README.md
+@@ -50,3 +50,4 @@ Restart your session or mpDris2 after changing mpDris2.conf.
+     [Bling]
+     notify = False
+     mmkeys = True
++    cdprev = True
+diff --git a/src/mpDris2.conf b/src/mpDris2.conf
+index 73235ef..0fe65bf 100644
+--- a/src/mpDris2.conf
++++ b/src/mpDris2.conf
+@@ -16,3 +16,5 @@
+ #notify = True
+ # Urgency of the notification: 0 for low, 1 for medium and 2 for high.
+ #notify_urgency = 0
++# CD-like previous command: if playback is past 3 seconds, seek to the beginning
++#cdprev = True
+diff --git a/src/mpDris2.in.py b/src/mpDris2.in.py
+index 24f32e8..54cf77b 100755
+--- a/src/mpDris2.in.py
++++ b/src/mpDris2.in.py
+@@ -70,6 +70,7 @@ params = {
+     'mmkeys': True,
+     'notify': (Notify is not None),
+     'notify_urgency': 0,
++    'cdprev': True,
+ }
+ 
+ defaults = {
+@@ -872,6 +873,12 @@ class MPDWrapper(object):
+             raise AttributeError(attr)
+         return lambda *a, **kw: self.call(attr, *a, **kw)
+ 
++    def previous(self):
++        if self._params['cdprev'] and self._position >= 3:
++            self.seekid(int(self._status['songid']), 0)
++        else:
++            self.call("previous")
++
+     def call(self, command, *args):
+         fn = getattr(self.client, command)
+         try:
+@@ -1408,7 +1415,7 @@ if __name__ == '__main__':
+ 
+     params['host'] = os.path.expanduser(params['host'])
+ 
+-    for p in ['mmkeys', 'notify']:
++    for p in ['mmkeys', 'notify', 'cdprev']:
+         if config.has_option('Bling', p):
+             params[p] = config.getboolean('Bling', p)
+ 
+-- 
+2.33.1
+

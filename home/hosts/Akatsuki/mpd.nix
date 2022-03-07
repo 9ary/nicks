@@ -75,6 +75,11 @@
 
     services.mpdris2 = {
       enable = true;
+      package = pkgs.mpdris2.overrideAttrs (prev: {
+        patches = prev.patches or [] ++ [
+          ./mpd/0001-Add-optional-CD-like-previous-behavior.patch
+        ];
+      });
     };
 
     services.spotifyd = {

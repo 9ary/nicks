@@ -1,13 +1,13 @@
 [
-  ./colors.nix
+  ./config/colors.nix
+  ./config/misc.nix
+  ./config/workstation/foot.nix
+  ./config/workstation/gtk.nix
+  ./config/workstation/sway
+  ./config/workstation/sway/wlsunset.nix
+  ./config/workstation/telegram.nix
+  ./config/workstation/xcursor.nix
+  ./config/zsh
+  ./config/zsh/dircolors.nix
   ./hosts/Akatsuki/mpd.nix
-  ./misc.nix
-  ./workstation/foot.nix
-  ./workstation/gtk.nix
-  ./workstation/sway
-  ./workstation/sway/wlsunset.nix
-  ./workstation/telegram.nix
-  ./workstation/xcursor.nix
-  ./zsh
-  ./zsh/dircolors.nix
 ]

@@ -12,6 +12,7 @@ let makeSources = final: {
   extendingSources = g: makeScope callPackageWith (extends g makeSources);
 in extendingSources) (final: prev: {
   nixpkgsArgs.default.aliases = {
+    pkgsDarwin = final.nixpkgs.nixos-darwin;
     pkgsDefault = final.nixpkgsArgs.default.aliases.pkgsStable;
     pkgsStable = final.nixpkgs.nixos-21_11;
     pkgsUnstable = final.nixpkgs.nixos-unstable;
@@ -54,10 +55,16 @@ in extendingSources) (final: prev: {
       };
     })
   ] ++ final.nixpkgsArgs.default.overlays or [ ];
+  nixpkgsArgs.nixos-darwin = let
+    nixpkgsArgsPrev = final.nixpkgsArgs.nixos-unstable;
+  in nixpkgsArgsPrev // {
+    system = "x86_64-darwin";
+  };
   nixpkgsArgs.nixos-unstable.overlays = [
     (pkgsFinal: pkgsPrev: {
       sources = pkgsPrev.sources // {
         home-manager = pkgsFinal.sources.home-manager-unstable;
+        nix-darwin = pkgsFinal.sources.nix-darwin-unstable;
       };
     })
   ] ++ final.nixpkgsArgs.default.overlays or [ ];
@@ -72,11 +79,16 @@ in extendingSources) (final: prev: {
       ] ++ nixpkgsArgs'.overlays or [ ];
     } else nixpkgsArgs') [ "aliases" ])
   ) (builtins.removeAttrs final.nixpkgsArgs [ "default" ]) // {
+    darwin = final.nixpkgsArgs.default.aliases.pkgsDarwin;
     default = final.nixpkgsArgs.default.aliases.pkgsDefault;
     stable = final.nixpkgsArgs.default.aliases.pkgsStable;
     unstable = final.nixpkgsArgs.default.aliases.pkgsUnstable;
   };
-  sources = let sourcesPrev = prev.sources; in sourcesPrev // {
+  sources = let
+    sourcesFinal = final.sources;
+    sourcesPrev = prev.sources;
+  in sourcesPrev // {
+    nixos-darwin = sourcesFinal.nixos-unstable // { name = "nixos-darwin"; };
     morph = let sourcePrev = sourcesPrev.morph; in sourcePrev // {
       src = final.nixpkgs.default.applyPatches {
         name = "source";

@@ -35,6 +35,18 @@
         "url": "https://github.com/DBCDK/morph/archive/5b852370d8054a895b5ba79b5ef017c3afbb3a3c.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "nix-darwin-unstable": {
+        "branch": "master",
+        "description": "nix modules for darwin",
+        "homepage": "",
+        "owner": "LnL7",
+        "repo": "nix-darwin",
+        "rev": "1df878b6f8351795a3bebfbe4fd2d02e1e8b29d6",
+        "sha256": "11yml2i48v62pxbrgbjxssw2bhfnmy3gz2gbg5mwfpx4wjxl61rz",
+        "type": "tarball",
+        "url": "https://github.com/LnL7/nix-darwin/archive/1df878b6f8351795a3bebfbe4fd2d02e1e8b29d6.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "nixos-21_11": {
         "branch": "nixos-21.11",
         "description": "Nix Packages collection",

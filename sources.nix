@@ -11,6 +11,47 @@ let makeSources = final: {
   inherit (boot.lib) callPackageWith extends makeScope;
   extendingSources = g: makeScope callPackageWith (extends g makeSources);
 in extendingSources) (final: prev: {
+  darwin-config = ./modules/hosts/DUBANKS-M-9ATM/darwin-configuration.nix;
+  nix-darwin = let
+    src = final.nixpkgs.darwin.sources.nix-darwin.src;
+  in final.nixpkgs.darwin.writeText "nix-darwin-default.nix" ''
+    { sources ? import ${toString ./sources.nix}
+    , nixpkgs ? toString sources.nixpkgs.darwin.path
+    , configuration ? ${toString final.darwin-config}
+    , lib ? pkgs.lib
+    , pkgs ? sources.nixpkgs.darwin
+    , system ? "x86_64-darwin"
+    }:
+
+    let
+      evalConfig = import ${toString src}/eval-config.nix { inherit lib; };
+
+      eval = evalConfig {
+        inherit pkgs system;
+        modules = [ configuration ];
+        inputs = { inherit nixpkgs; };
+        specialArgs = {
+          inherit lib pkgs sources;
+        };
+      };
+
+      # The source code of this repo needed by the [un]installers.
+      nix-darwin = lib.cleanSource (
+        lib.cleanSourceWith {
+          # We explicitly specify a name here otherwise `cleanSource` will use the
+          # basename of ./.  which might be different for different clones of this
+          # repo leading to non-reproducible outputs.
+          name = "nix-darwin";
+          src = ${toString src}/.;
+        }
+      );
+    in
+
+    eval // {
+      installer = pkgs.callPackage ${toString src}/pkgs/darwin-installer { inherit nix-darwin; };
+      uninstaller = pkgs.callPackage ${toString src}/pkgs/darwin-uninstaller { inherit nix-darwin; };
+    }
+  '';
   nixpkgsArgs.default.aliases = {
     pkgsDarwin = final.nixpkgs.nixos-darwin;
     pkgsDefault = final.nixpkgsArgs.default.aliases.pkgsStable;

@@ -8,9 +8,9 @@ let sources = import ../../../sources.nix; in
     nixpkgs.system = "x86_64-darwin";
 
     nix.nixPath = [
-      { darwin = toString sources.sources.nix-darwin-unstable.src; }
-      { darwin-config = toString ./darwin-configuration.nix; }
-      { nixpkgs = toString sources.nixpkgs.unstable.path; }
+      { darwin = toString sources.nix-darwin; }
+      { darwin-config = toString sources.darwin-config; }
+      { nixpkgs = toString sources.nixpkgs.darwin.path; }
     ];
 
     # List packages installed in system profile. To search by name, run:

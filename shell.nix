@@ -15,49 +15,7 @@ let
     '') entries}
   '';
 
-  pkgsDarwin = pkgs.pkgsDarwin;
-  darwin-config = ./modules/hosts/DUBANKS-M-9ATM/darwin-configuration.nix;
-  nix-darwin = let
-    src = pkgsDarwin.sources.nix-darwin.src;
-  in pkgsDarwin.writeText "nix-darwin-default.nix" ''
-    { sources ? import ${toString ./sources.nix}
-    , nixpkgs ? toString sources.nixpkgs.darwin.path
-    , configuration ? ${toString darwin-config}
-    , lib ? pkgs.lib
-    , pkgs ? sources.nixpkgs.darwin
-    , system ? "x86_64-darwin"
-    }:
-
-    let
-      evalConfig = import ${toString src}/eval-config.nix { inherit lib; };
-
-      eval = evalConfig {
-        inherit pkgs system;
-        modules = [ configuration ];
-        inputs = { inherit nixpkgs; };
-        specialArgs = {
-          inherit lib pkgs sources;
-        };
-      };
-
-      # The source code of this repo needed by the [un]installers.
-      nix-darwin = lib.cleanSource (
-        lib.cleanSourceWith {
-          # We explicitly specify a name here otherwise `cleanSource` will use the
-          # basename of ./.  which might be different for different clones of this
-          # repo leading to non-reproducible outputs.
-          name = "nix-darwin";
-          src = ${toString src}/.;
-        }
-      );
-    in
-
-    eval // {
-      installer = pkgs.callPackage ${toString src}/pkgs/darwin-installer { inherit nix-darwin; };
-      uninstaller = pkgs.callPackage ${toString src}/pkgs/darwin-uninstaller { inherit nix-darwin; };
-    }
-  '';
-  darwin = import nix-darwin { inherit sources; };
+  darwin = import sources.nix-darwin { inherit sources; };
   darwinSystem = darwin.system;
 in
 pkgs.mkShell {
@@ -78,8 +36,8 @@ pkgs.mkShell {
     "nixpkgs=${toString (if pkgs.stdenv.isDarwin then pkgs.pkgsDarwin.path else pkgs.path)}"
     "home-manager=${toString pkgs.home-manager.path}"
   ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
-    "darwin=${toString nix-darwin}"
-    "darwin-config=${toString darwin-config}"
+    "darwin=${toString sources.nix-darwin}"
+    "darwin-config=${toString sources.darwin-config}"
   ]);
   NIX_SSL_CERT_FILE = "${pkgs.cacert.out}/etc/ssl/certs/ca-bundle.crt";
 }

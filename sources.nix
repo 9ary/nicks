@@ -2,8 +2,7 @@ let makeSources = final: {
   fetchSources = final.callPackage _sources/fetch-sources.nix final.fetchers;
   fetchers = { useBuiltins = true; };
   lib = import "${final.sources.nixpkgs-lib.src}/lib";
-  sources =
-    builtins.mapAttrs (name: value: value // { src = builtins.trace "sources.${name}.src (default)" value.src; }) (final.fetchSources { inherit (final) sourcesFile unfetchedSources; });
+  sources = final.fetchSources { inherit (final) sourcesFile unfetchedSources; };
   sourcesFile = ./_sources/nix/sources.json;
   unfetchedSources = builtins.fromJSON (builtins.readFile final.sourcesFile);
 }; in let boot = makeSources boot // {
@@ -88,7 +87,7 @@ in extendingSources) (final: prev: {
   nixpkgs = let
     nixpkgsArgsDefault = final.nixpkgsArgs.default;
   in builtins.mapAttrs (name: nixpkgsArgs:
-    import (builtins.trace "nixpkgs.${name}" final.sources.${name}.src) (builtins.removeAttrs (let
+    import final.sources.${name}.src (builtins.removeAttrs (let
       nixpkgsArgs' = nixpkgsArgsDefault // nixpkgsArgs;
     in if nixpkgsArgs' ? aliases then nixpkgsArgs' // {
       overlays = [

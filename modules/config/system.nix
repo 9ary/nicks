@@ -1,19 +1,22 @@
 # Basic system configuration
-{ config, ... }:
+{ lib, config, ... }:
 
 {
-  config = {
-    nix.autoOptimiseStore = true;
+  config = lib.mkMerge [
+    {
+      nix.autoOptimiseStore = true;
 
-    environment.pathsToLink = [
-      "/share/zsh"
-    ];
+      environment.pathsToLink = [
+        "/share/zsh"
+      ];
 
-    services.openssh.enable = true;
-
-    services.journald.extraConfig = ''
-      SystemMaxUse=100M
-      MaxFileSec=7day
-    '';
-  };
+      services.openssh.enable = true;
+    }
+    (lib.mkIf config.systemProfile.isNovenary {
+      services.journald.extraConfig = ''
+        SystemMaxUse=100M
+        MaxFileSec=7day
+      '';
+    })
+  ];
 }

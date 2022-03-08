@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 
 {
-  config = {
+  config = lib.mkIf config.systemProfile.isNovenary {
     users.groups.novenary = {
       gid = 1000;
     };

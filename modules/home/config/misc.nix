@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ lib, osConfig, pkgs, ... }:
 
 {
-  config = {
+  config = lib.mkIf osConfig.systemProfile.isNovenary {
     home.packages = [
       pkgs.git
       pkgs.firefox

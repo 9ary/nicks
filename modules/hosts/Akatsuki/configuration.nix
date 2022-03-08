@@ -21,6 +21,7 @@
     };
 
     systemProfile = {
+      isNovenary = true;
       isWorkstation = true;
     };
 

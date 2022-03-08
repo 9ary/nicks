@@ -10,5 +10,5 @@
   ./hosts/Akatsuki/jellyfin.nix
   ./hosts/Akatsuki/metalfan.nix
   ./services/metalfan
-  ./system_profile.nix
+  ./system-profile.nix
 ]

@@ -1,7 +1,7 @@
-{ lib, config, ... }:
+{ lib, config, osConfig, ... }:
 
 {
-  config = {
+  config = lib.mkIf osConfig.systemProfile.isNovenary {
     miscAttrs.colors = let
       cfg = config.miscAttrs.colors;
     in {

@@ -1,22 +1,24 @@
-{ ... }:
+{ lib, config, ... }:
 
 {
-  config = {
-    networking.useDHCP = false;
-    networking.useNetworkd = true;
+  config = lib.mkMerge [
+    (lib.mkIf config.systemProfile.isNovenary {
+      networking.useDHCP = false;
+      networking.useNetworkd = true;
 
-    systemd.network.networks."50-wired" = {
-      matchConfig.Name = [ "en*" ];
-      DHCP = "yes";
-      dhcpV4Config = {
-        UseDomains = true;
-        RouteMetric = 20;
+      systemd.network.networks."50-wired" = {
+        matchConfig.Name = [ "en*" ];
+        DHCP = "yes";
+        dhcpV4Config = {
+          UseDomains = true;
+          RouteMetric = 20;
+        };
       };
-    };
 
-    services.resolved = {
-      enable = true;
-      dnssec = "false";
-    };
-  };
+      services.resolved = {
+        enable = true;
+        dnssec = "false";
+      };
+    })
+  ];
 }

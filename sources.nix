@@ -25,29 +25,6 @@ in extendingSources) (final: prev: {
     (pkgsFinal: pkgsPrev: let
       libFinal = pkgsFinal.lib;
     in {
-      haskell = let
-        haskellLibFinal = pkgsFinal.haskell.lib;
-      in pkgsPrev.haskell // {
-        packageOverrides = let
-          packageOverridesPrev = pkgsPrev.haskell.packageOverrides or (haskellFinal: haskellPrev: { });
-        in libFinal.composeExtensions packageOverridesPrev (haskellFinal: haskellPrev: {
-          nvfetcher = haskellLibFinal.generateOptparseApplicativeCompletion "nvfetcher" (haskellLibFinal.overrideCabal
-            (haskellFinal.callPackage "${pkgsFinal.sources.nvfetcher.src}/nix" { })
-            (drvPrev: {
-              # test needs network
-              doCheck = false;
-              buildTools = drvPrev.buildTools or [ ] ++ [ pkgsFinal.makeWrapper ];
-              postInstall = drvPrev.postInstall or "" + ''
-                wrapProgram "$out"/bin/nvfetcher \
-                  --prefix PATH ':' ${libFinal.escapeShellArg (libFinal.makeBinPath [
-                    pkgsFinal.nix-prefetch
-                    pkgsFinal.nvchecker
-                  ])}
-              '';
-            })
-          );
-        });
-      };
       home-manager = pkgsFinal.callPackage pkgsFinal.sources.home-manager.src {
         pkgs = pkgsFinal;
       };

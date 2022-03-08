@@ -1,8 +1,8 @@
 [
-  ./common/networking.nix
-  ./common/system.nix
-  ./common/users
-  ./common/workstation
+  ./config/networking.nix
+  ./config/system.nix
+  ./config/users
+  ./config/workstation
   ./hosts/Akatsuki/configuration.nix
   ./hosts/Akatsuki/ddcci.nix
   ./hosts/Akatsuki/hardware-configuration.nix

@@ -2,7 +2,7 @@
   ./config/home-manager.nix
   ./config/networking.nix
   ./config/system.nix
-  ./config/users
+  ./config/users/novenary.nix
   ./config/workstation
   ./hosts/Akatsuki/configuration.nix
   ./hosts/Akatsuki/ddcci.nix

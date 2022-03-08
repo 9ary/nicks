@@ -1,12 +1,15 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [ <home-manager/nixos> ];
+  imports = [
+    "${pkgs.sources.home-manager.src}/nixos"
+  ];
   config = {
     home-manager = {
       useUserPackages = true;
       useGlobalPkgs = true;
       extraSpecialArgs = {
+        inherit pkgs;
         systemProfile = config.systemProfile;
       };
     };

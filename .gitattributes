@@ -2,3 +2,5 @@ _sources/generated-newver.json linguist-generated
 _sources/generated-oldver.json linguist-generated
 _sources/generated.json linguist-generated
 _sources/generated.nix linguist-generated
+_sources/nix/sources.json linguist-generated
+_sources/nix/sources.nix linguist-vendored

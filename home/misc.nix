@@ -2,16 +2,16 @@
 
 {
   config = {
-    home.packages = with pkgs; [
-      git
-      firefox
-      unstable.neovim
-      wget
-      tree
-      ripgrep
+    home.packages = [
+      pkgs.git
+      pkgs.firefox
+      pkgs.pkgsUnstable.neovim
+      pkgs.wget
+      pkgs.tree
+      pkgs.ripgrep
 
-      terminus_font
-      ubuntu_font_family
+      pkgs.terminus_font
+      pkgs.ubuntu_font_family
     ];
   };
 }

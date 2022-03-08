@@ -1,0 +1,86 @@
+{
+    "home-manager-21_11": {
+        "branch": "release-21.11",
+        "description": "Manage a user environment using Nix  [maintainer=@rycee] ",
+        "homepage": "https://nix-community.github.io/home-manager/",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "2860d7e3bb350f18f7477858f3513f9798896831",
+        "sha256": "0zkhdf3d2pqr6lr2mibrngp0fjcpdjk9abc55kqp43mq05caq6f9",
+        "type": "tarball",
+        "url": "https://github.com/nix-community/home-manager/archive/2860d7e3bb350f18f7477858f3513f9798896831.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "home-manager-unstable": {
+        "branch": "master",
+        "description": "Manage a user environment using Nix  [maintainer=@rycee] ",
+        "homepage": "https://nix-community.github.io/home-manager/",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "afe96e7433c513bf82375d41473c57d1f66b4e68",
+        "sha256": "0z6ak8mwx2n5fwqvygjlmxg20xmx6c6ffda219y3agf8gz22lfjq",
+        "type": "tarball",
+        "url": "https://github.com/nix-community/home-manager/archive/afe96e7433c513bf82375d41473c57d1f66b4e68.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "morph": {
+        "branch": "master",
+        "description": "NixOS deployment tool",
+        "homepage": null,
+        "owner": "DBCDK",
+        "repo": "morph",
+        "rev": "5b852370d8054a895b5ba79b5ef017c3afbb3a3c",
+        "sha256": "166dwibbpb90bdy8dvhlinh6gc509f8pq8wn345h01pilf7fc8fh",
+        "type": "tarball",
+        "url": "https://github.com/DBCDK/morph/archive/5b852370d8054a895b5ba79b5ef017c3afbb3a3c.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixos-21_11": {
+        "branch": "nixos-21.11",
+        "description": "Nix Packages collection",
+        "homepage": "",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2ebb6c1e5ae402ba35cca5eec58385e5f1adea04",
+        "sha256": "0ipqlxhkd7srq1hqhlr4lms5sj20gbyg2cs3kg9dkmvdv6c66yb4",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/2ebb6c1e5ae402ba35cca5eec58385e5f1adea04.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixos-unstable": {
+        "branch": "nixos-unstable",
+        "description": "Nix Packages collection",
+        "homepage": "",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "062a0c5437b68f950b081bbfc8a699d57a4ee026",
+        "sha256": "0vfd7g1gwy9lcnnv8kclqr68pndd9sg0xq69h465zbbzb2vnijh9",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/062a0c5437b68f950b081bbfc8a699d57a4ee026.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs-lib": {
+        "branch": "master",
+        "description": "nixpkgs lib for cheap instantiation [maintainer=@github-action] (with initial help from @blaggacao)",
+        "homepage": "",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "4936ea5f6fe2be650524006722b4e33a2e4a4e25",
+        "sha256": "02bg0ng060vbhs1gg04jlxdqwnx6f44wkkaa4lrdckvj3mlngs1g",
+        "type": "tarball",
+        "url": "https://github.com/nix-community/nixpkgs.lib/archive/4936ea5f6fe2be650524006722b4e33a2e4a4e25.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nvfetcher": {
+        "branch": "master",
+        "description": "Generate nix sources expr for the latest version of packages",
+        "homepage": "https://nvfetcher.berberman.space",
+        "owner": "berberman",
+        "repo": "nvfetcher",
+        "rev": "9f2cb15c4668859312b6a854d79ad753d5b98b03",
+        "sha256": "08qk11p708ib8j2drrx73bgm6zrxm5vpyr4pw79mkq5jdcp62j64",
+        "type": "tarball",
+        "url": "https://github.com/berberman/nvfetcher/archive/9f2cb15c4668859312b6a854d79ad753d5b98b03.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}

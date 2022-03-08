@@ -4,7 +4,7 @@
   config = let
     keybindsPath = ".local/share/TelegramDesktop/tdata/shortcuts-custom.json";
   in {
-    home.packages = [ pkgs.unstable.tdesktop ];
+    home.packages = [ pkgs.pkgsUnstable.tdesktop ];
 
     home.file."${keybindsPath}".text = builtins.toJSON (lib.mapAttrsToList (k: v: {
       command = v;

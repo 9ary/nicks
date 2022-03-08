@@ -4,7 +4,7 @@ let
   cfg = config.services.metalfan;
 
   script = pkgs.writers.writePython3 "metalfan.py" {
-    libraries = with pkgs.python3Packages; [ attrs ];
+    libraries = let pyPkgs = pkgs.python3Packages; in [ pyPkgs.attrs ];
   } ./metalfan.py;
 
   configFile = pkgs.writeText "metalfan.json" (builtins.toJSON cfg.config);

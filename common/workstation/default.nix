@@ -14,7 +14,7 @@
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
-      extraPackages = with pkgs; [ swaylock swayidle ];
+      extraPackages = [ pkgs.swaylock pkgs.swayidle ];
     };
 
     xdg.portal.wlr = {

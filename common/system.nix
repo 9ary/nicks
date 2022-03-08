@@ -3,14 +3,6 @@
 
 {
   config = {
-    nixpkgs.overlays = [
-      (_: _: {
-        unstable = import <unstable> {
-          config = config.nixpkgs.config;
-        };
-      })
-    ];
-
     nix.autoOptimiseStore = true;
 
     environment.pathsToLink = [

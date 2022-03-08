@@ -1,2 +1,3 @@
 .gcroots
 _sources/generated-oldver.json
+_sources/nix/sources.nix

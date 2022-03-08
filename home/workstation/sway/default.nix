@@ -115,7 +115,7 @@
               icon_theme ${config.gtk.iconTheme.name}
             '';
             statusCommand = toString (pkgs.writers.writePython3 "swaystatus" {
-              libraries = with pkgs.python3Packages; [ pkgs.local.python-pyalsaaudio psutil soco ];
+              libraries = let pyPkgs = pkgs.python3Packages; in [ pkgs.local.python-pyalsaaudio pyPkgs.psutil pyPkgs.soco ];
             } ./status/status.py);
 
             colors = let

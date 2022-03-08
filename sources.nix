@@ -1,50 +1,30 @@
-let
-  sourcesBoot = import _sources/generated.nix;
-  fetchersBoot = fetchersFinal: {
-    fetchTarball = builtins.fetchTarball;
-    fetchFromGitHub = (
-      { owner, repo, rev, sha256, fetchSubmodules ? false }:
-      assert fetchSubmodules == false;
-      fetchersFinal.fetchTarball {
-        name = "source";
-        url = "https://api.github.com/repos/${owner}/${repo}/tarball/${rev}";
-        inherit sha256;
-      }
-    );
+let makeSources = final: {
+  fetchSources = final.callPackage _sources/fetch-sources.nix final.fetchers;
+  fetchers = { useBuiltins = true; };
+  lib = import "${final.sources.nixpkgs-lib.src}/lib";
+  sources =
+    builtins.mapAttrs (name: value: value // { src = builtins.trace "sources.${name}.src (default)" value.src; }) (final.fetchSources { inherit (final) sourcesFile unfetchedSources; });
+  sourcesFile = ./_sources/nix/sources.json;
+  unfetchedSources = builtins.fromJSON (builtins.readFile final.sourcesFile);
+}; in let boot = makeSources boot // {
+    fetchSources = import _sources/fetch-sources.nix boot.fetchers;
+}; in let prevFixed = (let
+  inherit (boot.lib) callPackageWith extends makeScope;
+  extendingSources = g: makeScope callPackageWith (extends g makeSources);
+in extendingSources) (final: prev: {
+  nixpkgsArgs.default.aliases = {
+    pkgsDefault = final.nixpkgsArgs.default.aliases.pkgsStable;
+    pkgsStable = final.nixpkgs.nixos-21_11;
+    pkgsUnstable = final.nixpkgs.nixos-unstable;
+    sources = final.sources;
+    unfetchedSources = final.unfetchedSources;
   };
-  fetchedSourcesBoot = let
-    functionArgs = f:
-      if f ? __functor
-      then f.__functionArgs or (functionArgs (f.__functor f))
-      else builtins.functionArgs f;
-    isFunction = f: builtins.isFunction f ||
-      (f ? __functor && isFunction (f.__functor f));
-    fix = f: let final = f final; in final;
-    callPackageWith= autoArgs: fn: args:
-      let
-        f = if isFunction fn then fn else import fn;
-        fArgs = functionArgs f;
-        throwMissing = name: hasDefault: throw "callPackageWith: missing attr ${name}";
-        fallback = builtins.mapAttrs throwMissing fArgs;
-        auto = builtins.intersectAttrs fArgs autoArgs;
-      in f (fallback // auto // args);
-  in callPackageWith (fix fetchersBoot) sourcesBoot { };
-  libBoot = import "${fetchedSourcesBoot.nixpkgs-lib.src}/lib";
-in
-libBoot.makeScope libBoot.callPackageWith (final: {
-  sources = sourcesBoot;
-  fetchedSources = final.fetchers.callPackage final.sources { };
-  lib = libBoot;
-  fetchers = final.lib.makeScope final.newScope (final.lib.extends (fetchersFinal: fetchersPrev: {
-    fetchgit = final.nixpkgs.fetchgit;
-    fetchurl = final.nixpkgs.fetchurl;
-  }) fetchersBoot);
-  nixpkgsConfig = {
+  nixpkgsArgs.default.config = {
+    allowUnfree = true;
   };
-  nixpkgsOverlays = [
+  nixpkgsArgs.default.overlays = [
     (pkgsFinal: pkgsPrev: let
       libFinal = pkgsFinal.lib;
-      fetchedSources = pkgsFinal.callPackage final.sources { };
     in {
       haskell = let
         haskellLibFinal = pkgsFinal.haskell.lib;
@@ -53,7 +33,7 @@ libBoot.makeScope libBoot.callPackageWith (final: {
           packageOverridesPrev = pkgsPrev.haskell.packageOverrides or (haskellFinal: haskellPrev: { });
         in libFinal.composeExtensions packageOverridesPrev (haskellFinal: haskellPrev: {
           nvfetcher = haskellLibFinal.generateOptparseApplicativeCompletion "nvfetcher" (haskellLibFinal.overrideCabal
-            (haskellFinal.callPackage "${fetchedSources.nvfetcher.src}/nix" { })
+            (haskellFinal.callPackage "${pkgsFinal.sources.nvfetcher.src}/nix" { })
             (drvPrev: {
               # test needs network
               doCheck = false;
@@ -69,6 +49,17 @@ libBoot.makeScope libBoot.callPackageWith (final: {
           );
         });
       };
+      home-manager = pkgsFinal.callPackage pkgsFinal.sources.home-manager.src {
+        pkgs = pkgsFinal;
+      };
+      local = {
+        gitprompt-rs = pkgsFinal.callPackage ./packages/gitprompt-rs {};
+        python-pyalsaaudio = pkgsFinal.callPackage ./packages/python/pyalsaaudio.nix {};
+      };
+      morph = import pkgsFinal.sources.morph.src {
+        pkgs = pkgsFinal;
+        version = pkgsFinal.sources.morph.version;
+      };
       nix-prefetch = pkgsPrev.nix-prefetch.overrideAttrs (attrsPrev: {
         patches = attrsPrev.patches or [ ] ++ [
           # https://github.com/msteen/nix-prefetch/pull/34/
@@ -80,12 +71,43 @@ libBoot.makeScope libBoot.callPackageWith (final: {
       });
     })
   ];
-  callNixpkgs = nixpkgs: nixpkgs {
-    config = final.nixpkgsConfig;
-    overlays = final.nixpkgsOverlays;
+  nixpkgsArgs.nixos-21_11.overlays = [
+    (pkgsFinal: pkgsPrev: {
+      sources = pkgsPrev.sources // {
+        home-manager = pkgsFinal.sources.home-manager-21_11;
+      };
+    })
+  ] ++ final.nixpkgsArgs.default.overlays or [ ];
+  nixpkgsArgs.nixos-unstable.overlays = [
+    (pkgsFinal: pkgsPrev: {
+      sources = pkgsPrev.sources // {
+        home-manager = pkgsFinal.sources.home-manager-unstable;
+      };
+    })
+  ] ++ final.nixpkgsArgs.default.overlays or [ ];
+  nixpkgs = let
+    nixpkgsArgsDefault = final.nixpkgsArgs.default;
+  in builtins.mapAttrs (name: nixpkgsArgs:
+    import (builtins.trace "nixpkgs.${name}" final.sources.${name}.src) (builtins.removeAttrs (let
+      nixpkgsArgs' = nixpkgsArgsDefault // nixpkgsArgs;
+    in if nixpkgsArgs' ? aliases then nixpkgsArgs' // {
+      overlays = [
+        (pkgsFinal: pkgsPrev: nixpkgsArgs'.aliases)
+      ] ++ nixpkgsArgs'.overlays or [ ];
+    } else nixpkgsArgs') [ "aliases" ])
+  ) (builtins.removeAttrs final.nixpkgsArgs [ "default" ]) // {
+    default = final.nixpkgsArgs.default.aliases.pkgsDefault;
+    stable = final.nixpkgsArgs.default.aliases.pkgsStable;
+    unstable = final.nixpkgsArgs.default.aliases.pkgsUnstable;
   };
-  nixos-unstable = final.callNixpkgs (import final.fetchedSources.nixos-unstable.src);
-  nixos-21_11 = final.callNixpkgs (import final.fetchedSources.nixos-21_11.src);
-  nixos-stable = final.nixos-21_11;
-  nixpkgs = final.nixos-stable;
+}); in prevFixed.overrideScope' (final: prev: {
+  sources = let sourcesPrev = prev.sources; in sourcesPrev // {
+    nixos-21_11 = let sourcePrev = sourcesPrev.nixos-21_11; in sourcePrev // {
+      src = builtins.trace "sources.nixpkgs-21_11.src (applyPatches)" (prevFixed.nixpkgs.nixos-21_11.applyPatches {
+        name = "source";
+        src = sourcePrev.src;
+        patches = [ ./nixos-21.11-lib-modules-extendModules-specialArgs.patch ];
+      });
+    };
+  };
 })

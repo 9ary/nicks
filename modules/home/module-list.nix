@@ -1,9 +1,6 @@
 [
-  ./hosts
-
   ./colors.nix
   ./misc.nix
   ./zsh
-
-  ./workstation
+  ./zsh/dircolors.nix
 ]

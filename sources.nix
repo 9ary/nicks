@@ -53,8 +53,8 @@ in extendingSources) (final: prev: {
         pkgs = pkgsFinal;
       };
       local = {
-        gitprompt-rs = pkgsFinal.callPackage ./packages/gitprompt-rs {};
-        python-pyalsaaudio = pkgsFinal.callPackage ./packages/python/pyalsaaudio.nix {};
+        gitprompt-rs = pkgsFinal.callPackage ./pkgs/gitprompt-rs {};
+        python-pyalsaaudio = pkgsFinal.callPackage ./pkgs/python/pyalsaaudio.nix {};
       };
       morph = import pkgsFinal.sources.morph.src {
         pkgs = pkgsFinal;

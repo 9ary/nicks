@@ -6,6 +6,7 @@ let
     let extendedModule = extendModules {
       modules = [
         {
+          imports = [ ./modules ];
           config = {
             _module.args = {
               lib = nixpkgs.lib.mkForce nixpkgs.lib;
@@ -25,7 +26,7 @@ in {
 } // builtins.mapAttrs (machineName: extendNetworkMachineModule) {
   "Akatsuki" = { config, lib, ... }: {
     imports = [
-      ./hosts/Akatsuki/configuration.nix
+      ./modules/hosts/Akatsuki/configuration.nix
     ];
 
     config = {

@@ -1,10 +1,6 @@
 { lib, pkgs, ... }:
 
 {
-  imports = [
-    ./dircolors.nix
-  ];
-
   config = {
     programs.zsh = lib.mkMerge [
       {

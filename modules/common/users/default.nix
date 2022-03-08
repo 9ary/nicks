@@ -6,12 +6,15 @@
   ];
   config = {
     home-manager = {
-      useUserPackages = true;
-      useGlobalPkgs = true;
       extraSpecialArgs = {
         inherit pkgs;
         systemProfile = config.systemProfile;
       };
+      sharedModules = [
+        ../../home
+      ];
+      useGlobalPkgs = true;
+      useUserPackages = true;
     };
 
     users.groups.novenary = {
@@ -30,6 +33,6 @@
         "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDC7Imp6NwHMa/zD+y0C11h4PbPqFobL7fDiTKwG7GDe5BSVhWLKxNRd+A5CioC2B4jWitYoJyLnZyaMElE11ZEPMx1YNH8NUABJ4+xzP4AxASl2WISbqAEfUHAfwnK1R3Cf83JTpOrAFYIFaYViO3+TIoN5hMJmKaWu6K6JcSw1mMcPkmctkrR/fqFkcGB3Uj+ECPvg6+u52PBRPrnr7JLgxPuPHI5J10CB+5AvteFZDHL/nAnEU8pa6iQO7Q17TKxLd+ngmqajWlZRBYoXniqvZxp9tS5n2AG3htLZgbHVX141R885ze7B6EDs/IqTrCHLUcxsnfFO7UzaKdD++GX"
       ];
     };
-    home-manager.users.novenary = import ../../home;
+    home-manager.users.novenary = { };
   };
 }

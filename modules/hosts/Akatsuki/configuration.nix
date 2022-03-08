@@ -2,15 +2,17 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
-    ../../common
-
     ./ddcci.nix
+    ./hardware-configuration.nix
     ./jellyfin.nix
     ./metalfan.nix
   ];
 
   config = {
+    home-manager.users.novenary = {
+      imports = import ../../home/hosts/Akatsuki/module-list.nix;
+    };
+
     boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     boot.supportedFilesystems = [ "zfs" ];
     boot.zfs.devNodes = "/dev/";

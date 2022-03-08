@@ -1,7 +1,7 @@
-{ lib, pkgs, ... }:
+{ lib, osConfig, pkgs, ... }:
 
 {
-  config = let
+  config = lib.mkIf osConfig.systemProfile.isWorkstation (let
     keybindsPath = ".local/share/TelegramDesktop/tdata/shortcuts-custom.json";
   in {
     home.packages = [ pkgs.pkgsUnstable.tdesktop ];
@@ -15,5 +15,5 @@
       "ctrl+n" = "next_chat";
       "ctrl+p" = "previous_chat";
     });
-  };
+  });
 }

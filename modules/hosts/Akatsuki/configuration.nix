@@ -2,10 +2,6 @@
 
 {
   config = lib.mkIf (config.networking.hostName == "Akatsuki") {
-    home-manager.users.novenary = {
-      imports = import ../../home/hosts/Akatsuki/module-list.nix;
-    };
-
     boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     boot.supportedFilesystems = [ "zfs" ];
     boot.zfs.devNodes = "/dev/";

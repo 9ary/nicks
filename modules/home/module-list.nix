@@ -1,6 +1,13 @@
 [
   ./colors.nix
+  ./hosts/Akatsuki/mpd.nix
   ./misc.nix
+  ./workstation/foot.nix
+  ./workstation/gtk.nix
+  ./workstation/sway
+  ./workstation/sway/wlsunset.nix
+  ./workstation/telegram.nix
+  ./workstation/xcursor.nix
   ./zsh
   ./zsh/dircolors.nix
 ]

@@ -1,7 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ lib, config, osConfig, pkgs, ... }:
 
 {
-  config = {
+  config = lib.mkIf osConfig.systemProfile.isWorkstation {
     wayland.windowManager.sway = {
       enable = true;
       package = null;

@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ lib, config, osConfig, ... }:
 
 {
-  config = {
+  config = lib.mkIf osConfig.systemProfile.isWorkstation {
     programs.foot = {
       enable = true;
       settings = let

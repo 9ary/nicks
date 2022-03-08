@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 let
   cfg = config.services.metalfan;

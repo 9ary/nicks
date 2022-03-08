@@ -1,4 +1,5 @@
 [
+  ./config/home-manager.nix
   ./config/networking.nix
   ./config/system.nix
   ./config/users

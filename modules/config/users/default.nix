@@ -1,19 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   config = {
-    home-manager = {
-      extraSpecialArgs = {
-        inherit pkgs;
-        systemProfile = config.systemProfile;
-      };
-      sharedModules = [
-        ../../home
-      ];
-      useGlobalPkgs = true;
-      useUserPackages = true;
-    };
-
     users.groups.novenary = {
       gid = 1000;
     };

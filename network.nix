@@ -14,7 +14,7 @@ in {
     module
   ];
 }) {
-  "Akatsuki" = { config, lib, ... }: {
+  "Akatsuki" = { lib, config, ... }: {
     config = {
       deployment.targetHost = "Akatsuki.lan";
       networking.hostName = "Akatsuki";

@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ lib, config, osConfig, pkgs, ... }:
 
 {
-  config = {
+  config = lib.mkIf (osConfig.networking.hostName == "Akatsuki") {
     services.mpd = {
       enable = true;
       musicDirectory = "/mnt/data/streetwalrus/music";

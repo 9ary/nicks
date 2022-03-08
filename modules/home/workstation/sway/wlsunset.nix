@@ -1,7 +1,7 @@
-{ ... }:
+{ lib, osConfig, ... }:
 
 {
-  config = {
+  config = lib.mkIf osConfig.systemProfile.isWorkstation {
     services.wlsunset = {
       enable = true;
       latitude = "32";

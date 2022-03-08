@@ -1,7 +1,7 @@
-{ ... }:
+{ lib, config, ... }:
 
 {
-  config = {
+  config = lib.mkIf (config.networking.hostName == "Akatsuki") {
     # TODO https://bugzilla.kernel.org/show_bug.cgi?id=204807
     boot.kernelModules = [ "nct6775" ];
     boot.kernelParams = [ "acpi_enforce_resources=lax" ];

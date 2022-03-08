@@ -1,11 +1,9 @@
-{ config, lib, modulesPath, ... }:
+{ lib, config, ... }:
 
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+  config = lib.mkIf (config.networking.hostName == "Akatsuki") {
+    hardware.enableRedistributableFirmware = true;
 
-  config = {
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     boot.initrd.kernelModules = [ ];
     boot.kernelModules = [ "kvm-amd" ];

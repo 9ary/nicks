@@ -1,14 +1,7 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 {
-  imports = [
-    ./ddcci.nix
-    ./hardware-configuration.nix
-    ./jellyfin.nix
-    ./metalfan.nix
-  ];
-
-  config = {
+  config = lib.mkIf (config.networking.hostName == "Akatsuki") {
     home-manager.users.novenary = {
       imports = import ../../home/hosts/Akatsuki/module-list.nix;
     };
@@ -23,9 +16,6 @@
 
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
-
-    networking.hostName = "Akatsuki"; # Define your hostname.
-    networking.hostId = "39745438";
 
     time.timeZone = "Asia/Jerusalem";
 

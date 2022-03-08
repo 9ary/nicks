@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 {
-  config = {
+  config = lib.mkIf (config.networking.hostName == "Akatsuki") {
     boot.extraModulePackages = [ config.boot.kernelPackages.ddcci-driver ];
     services.udev.extraRules = ''
       # Reload ddcci driver on monitor hotplug (since the driver doesn't handle it)

@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [
-    "${pkgs.sources.home-manager.src}/nixos"
-  ];
   config = {
     home-manager = {
       extraSpecialArgs = {

@@ -3,6 +3,11 @@
   ./common/system.nix
   ./common/users
   ./common/workstation
-  ./metalfan
+  ./hosts/Akatsuki/configuration.nix
+  ./hosts/Akatsuki/ddcci.nix
+  ./hosts/Akatsuki/hardware-configuration.nix
+  ./hosts/Akatsuki/jellyfin.nix
+  ./hosts/Akatsuki/metalfan.nix
+  ./services/metalfan
   ./system_profile.nix
 ]

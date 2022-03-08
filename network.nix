@@ -6,6 +6,7 @@ in {
   network.specialArgs = {
     lib = nixpkgs.lib;
     pkgs = nixpkgs;
+    sources = sources;
   };
 } // builtins.mapAttrs (machineName: module: {
   imports = [
@@ -14,12 +15,10 @@ in {
   ];
 }) {
   "Akatsuki" = { config, lib, ... }: {
-    imports = [
-      ./modules/hosts/Akatsuki/configuration.nix
-    ];
-
     config = {
       deployment.targetHost = "Akatsuki.lan";
+      networking.hostName = "Akatsuki";
+      networking.hostId = "39745438";
     };
   };
 }

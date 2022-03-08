@@ -8,7 +8,7 @@ let makeSources = final: {
   unfetchedSources = builtins.fromJSON (builtins.readFile final.sourcesFile);
 }; in let boot = makeSources boot // {
     fetchSources = import _sources/fetch-sources.nix boot.fetchers;
-}; in let prevFixed = (let
+}; in (let
   inherit (boot.lib) callPackageWith extends makeScope;
   extendingSources = g: makeScope callPackageWith (extends g makeSources);
 in extendingSources) (final: prev: {
@@ -100,14 +100,16 @@ in extendingSources) (final: prev: {
     stable = final.nixpkgsArgs.default.aliases.pkgsStable;
     unstable = final.nixpkgsArgs.default.aliases.pkgsUnstable;
   };
-}); in prevFixed.overrideScope' (final: prev: {
   sources = let sourcesPrev = prev.sources; in sourcesPrev // {
-    nixos-21_11 = let sourcePrev = sourcesPrev.nixos-21_11; in sourcePrev // {
-      src = builtins.trace "sources.nixpkgs-21_11.src (applyPatches)" (prevFixed.nixpkgs.nixos-21_11.applyPatches {
+    morph = let sourcePrev = sourcesPrev.morph; in sourcePrev // {
+      src = final.nixpkgs.default.applyPatches {
         name = "source";
         src = sourcePrev.src;
-        patches = [ ./nixos-21.11-lib-modules-extendModules-specialArgs.patch ];
-      });
+        patches = [
+          ./morph-0001-without-with-expr.patch
+          ./morph-0002-eval-machines-support-specialArgs.patch
+        ];
+      };
     };
   };
 })

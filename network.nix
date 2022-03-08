@@ -1,29 +1,18 @@
 let
   sources = import ./sources.nix;
   nixpkgs = sources.nixpkgs.default;
-
-  extendNetworkMachineModule = module: { extendModules, ... }:
-    let extendedModule = extendModules {
-      modules = [
-        {
-          imports = [ ./modules ];
-          config = {
-            _module.args = {
-              lib = nixpkgs.lib.mkForce nixpkgs.lib;
-              pkgs = nixpkgs.lib.mkForce nixpkgs;
-            };
-          };
-        }
-        module
-      ];
-      specialArgs = {
-        lib = nixpkgs.lib;
-        pkgs = nixpkgs;
-      };
-    }; in { inherit (extendedModule) options config; };
 in {
   network.pkgs = nixpkgs;
-} // builtins.mapAttrs (machineName: extendNetworkMachineModule) {
+  network.specialArgs = {
+    lib = nixpkgs.lib;
+    pkgs = nixpkgs;
+  };
+} // builtins.mapAttrs (machineName: module: {
+  imports = [
+    ./modules
+    module
+  ];
+}) {
   "Akatsuki" = { config, lib, ... }: {
     imports = [
       ./modules/hosts/Akatsuki/configuration.nix

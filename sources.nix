@@ -45,9 +45,26 @@ in extendingSources) (final: prev: {
           src = ${toString src}/.;
         }
       );
+
+      writeProgram = name: env: src: pkgs.substituteAll ({
+        inherit name src;
+        dir = "bin";
+        isExecutable = true;
+      } // env);
+
+      profile = "/nix/var/nix/profiles/system";
     in
 
     eval // {
+      darwin-option = writeProgram "darwin-option" {
+        inherit profile;
+        inherit (pkgs.stdenv) shell;
+      } ${toString src}/pkgs/nix-tools/darwin-option.sh;
+      darwin-rebuild = writeProgram "darwin-rebuild" {
+        inherit profile;
+        inherit (pkgs.stdenv) shell;
+        path = lib.makeBinPath [ pkgs.coreutils pkgs.jq ];
+      } ${toString src}/pkgs/nix-tools/darwin-rebuild.sh;
       installer = pkgs.callPackage ${toString src}/pkgs/darwin-installer { inherit nix-darwin; };
       uninstaller = pkgs.callPackage ${toString src}/pkgs/darwin-uninstaller { inherit nix-darwin; };
     }

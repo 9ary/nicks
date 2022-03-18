@@ -16,7 +16,6 @@ let
   '';
 
   darwin = import sources.nix-darwin { inherit sources; };
-  darwinSystem = darwin.system;
 in
 pkgs.mkShell {
   buildInputs = [
@@ -27,10 +26,8 @@ pkgs.mkShell {
     pkgs.nix-prefetch
     pkgs.nvchecker
   ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
-    (linkFarm' "nix-darwin" [
-      { path = "${darwinSystem}/sw/bin/darwin-rebuild"; subPath = "bin/darwin-rebuild"; }
-      { path = "${darwinSystem}/sw/bin/darwin-option"; subPath = "bin/darwin-option"; }
-    ])
+    darwin.darwin-option
+    darwin.darwin-rebuild
   ];
   NIX_PATH = pkgs.lib.concatStringsSep ":" ([
     "nixpkgs=${toString (if pkgs.stdenv.isDarwin then pkgs.pkgsDarwin.path else pkgs.path)}"

@@ -15,7 +15,17 @@ let sources = import ../../../sources.nix; in
 
     # List packages installed in system profile. To search by name, run:
     # $ nix-env -qaP | grep wget
-    environment.systemPackages = [
+    environment.systemPackages = let
+      llvmPackages = pkgs.llvmPackages_14;
+    in [
+      # llvmPackages.clang
+      # llvmPackages.clang-manpages
+      # llvmPackages.lld
+      # llvmPackages.lldb
+      # llvmPackages.llvm
+      # llvmPackages.llvm-manpages
+      (pkgs.clang-tools.override (prevArgs: { inherit llvmPackages; }))
+      pkgs.include-what-you-use
     ];
 
     # Use a custom configuration.nix location.

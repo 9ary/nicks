@@ -2,6 +2,8 @@
 
 {
   config = lib.mkIf (config.networking.hostName == "Akatsuki") {
+    nixpkgs.system = "x86_64-linux";
+
     boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     boot.supportedFilesystems = [ "zfs" ];
     boot.zfs.devNodes = "/dev/";

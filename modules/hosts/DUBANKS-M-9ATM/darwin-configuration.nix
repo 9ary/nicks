@@ -24,8 +24,9 @@ let sources = import ../../../sources.nix; in
       # llvmPackages.lldb
       # llvmPackages.llvm
       # llvmPackages.llvm-manpages
-      (pkgs.clang-tools.override (prevArgs: { inherit llvmPackages; }))
+      # (pkgs.clang-tools.override (prevArgs: { inherit llvmPackages; }))
       pkgs.include-what-you-use
+      # pkgs.standardnotes # unsupported system
     ];
 
     # Use a custom configuration.nix location.

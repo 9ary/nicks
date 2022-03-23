@@ -95,6 +95,10 @@ in extendingSources) (final: prev: {
         pkgs = pkgsFinal;
         version = pkgsFinal.sources.morph.version;
       };
+      niv = pkgsFinal.nivPackages.niv;
+      nivPackages = import pkgsFinal.sources.niv.src {
+        pkgs = pkgsFinal;
+      };
       nix-prefetch = pkgsPrev.nix-prefetch.overrideAttrs (attrsPrev: {
         patches = attrsPrev.patches or [ ] ++ [
           # https://github.com/msteen/nix-prefetch/pull/34/

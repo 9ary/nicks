@@ -8,6 +8,7 @@
     ./ddcci.nix
     ./jellyfin.nix
     ./metalfan.nix
+    ./transmission.nix
   ];
 
   config = {

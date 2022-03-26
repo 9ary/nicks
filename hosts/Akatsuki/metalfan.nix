@@ -21,7 +21,7 @@
             path = "/sys/devices/platform/nct6775.656/hwmon/hwmon*";
           };
           gpu = {
-            path = "/sys/bus/pci/drivers/amdgpu/0000:0b:00.0/hwmon/hwmon*";
+            path = "/sys/bus/pci/drivers/amdgpu/0000:0c:00.0/hwmon/hwmon*";
             probes = [ "temp1" ];
           };
         };

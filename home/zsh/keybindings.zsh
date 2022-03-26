@@ -1,3 +1,5 @@
+bindkey -e
+
 function terminfo-bindkey() {
     [[ -n "${terminfo[$1]}" ]] && bindkey "${terminfo[$1]}" $2
 }

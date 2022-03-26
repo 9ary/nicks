@@ -52,7 +52,6 @@
 
       # Key bindings
       {
-        defaultKeymap = "emacs";
         initExtra = builtins.readFile ./keybindings.zsh;
       }
 

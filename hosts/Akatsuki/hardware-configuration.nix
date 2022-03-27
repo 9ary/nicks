@@ -34,7 +34,7 @@
     fileSystems."/mnt/data" =
       { device = "/dev/disk/by-uuid/7aec7f58-44b4-4737-bd62-3dad9effa696";
         fsType = "btrfs";
-        options = [ "noauto" "x-systemd.automount" "rw" "noatime" "compress-force=zstd" "subvol=data" ];
+        options = [ "nofail" "rw" "noatime" "compress-force=zstd" "subvol=data" ];
       };
 
     fileSystems."/mnt/oldarch" =

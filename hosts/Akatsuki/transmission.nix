@@ -32,5 +32,9 @@
       openPeerPorts = true;
       settings.port-forwarding-enabled = false;
     };
+
+    systemd.services.transmission = {
+      after = [ "mnt-data.mount" ];
+    };
   };
 }
